@@ -1,15 +1,11 @@
-class Company {
+class Company extends EmployersControl {
    constructor(rooms = [], employers = []) {
+      super(employers);
       this._rooms = [];
-      this._employers = [];
       this.rooms = rooms;
-      this.employers = employers;
    }
    get rooms() {
       return this._rooms;
-   }
-   get employers() {
-      return this._employers;
    }
    set rooms(input) {
       if (input instanceof Room) {
@@ -28,23 +24,7 @@ class Company {
          }
       }
    }
-   set employers(input) {
-      if (input instanceof Employer) {
-         if (!this._employers.includes(input)) {
-            this._employers.push(input);
-            return;
-         }
-      }
-      let len = input.length;
-      for (let i = 0; i < len; i++) {
-         const element = input[i];
-         if (element instanceof Employer) {
-            if (!this._employers.includes(element)) {
-               this._employers.push(element);
-            }
-         }
-      }
-   }
+
    toString(input) {
       let string = '<table><tr><th>';
       switch (input) {
@@ -74,24 +54,47 @@ class Company {
       return string;
    }
 
-   remove(emp) {
-      if (emp instanceof Employer) {
-         let index = this._employers.indexOf(emp);
-         if (index > -1) {
-            this._employers.splice(index,1);
-            return;
-         }
+   calSumOfSalary() {
+      let sum = 0;
+      for (const iterator of this._employers) {
+         sum += iterator.getSalary();
       }
-      let len = emp.length;
-      for (let i = 0; i < len; i++) {
-         const element = emp[i];
-         if (element instanceof Employer) {
-            let index = this._employers.indexOf(element);
-            if (index>-1) {
-               this._employers.splice(index,1);
+      return sum;
+   }
+
+   findEmployers(infor) {
+      let result = [];
+      for (const employ of this._employers) {
+         for (const key in employ) {
+            if (employ.hasOwnProperty(key)) {
+               const element = employ[key];
+               if (element.toString() === infor) {
+                  result.push(employ);
+                  break;
+               }
             }
          }
       }
+      return result;
    }
+   findRooms(infor) {
+      let result = [];
+      for (const room of this._rooms) {
+         for (const key in room) {
+            if (room.hasOwnProperty(key)) {
+               const element = room[key];
+               if (key instanceof Employer /*+ find infor in Leader*/) {
 
+               }
+               /*+ find infor in Employers[]*/
+               if (element.toString() === infor) {
+                  result.push(room);
+                  break;
+               }
+               
+            }
+         }
+      }
+      return result;
+   }
 }

@@ -1,11 +1,11 @@
 describe("Test Class Room", function () {
    describe("Check setter", function () {
       let room = new Room();
-      it("Check code", function () {
+      it("Check Code", function () {
          room.code = 'SE13';
          expect(room.code).toBe('SE13');
       });
-      it("Check name", function () {
+      it("Check Name", function () {
          room.name = 'Web Dev';
          expect(room.name).toBe('Web Dev');
       });
@@ -20,7 +20,7 @@ describe("Test Class Room", function () {
          let ti = new Employer();
          let ta = teo;
          room.employers = teo;
-         room.employers = [tun, ti, ta];
+         room.employers = [tun, ti, ta, teo];
          expect(room.employers).toEqual([teo, tun, ti]);
       });
    });
